@@ -146,3 +146,14 @@ footer{text-align:center;padding:1.5rem;color:#555;background:#0a0a0a;}
   transform: scale(1.03);
   box-shadow: 0 0 35px rgba(0, 255, 255, 0.4);
 }
+
+@media (max-width: 768px) {
+  .crop-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+
