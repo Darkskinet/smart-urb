@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer View</title><link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener("DOMContentLoaded",()=>{
+      const inv = document.querySelectorAll('.inv-card');
+      const orders = [
+        { id:'#A123', crop:'Spinach', qty:5, status: 'Shipped' },
+        { id:'#B456', crop:'Lettuce', qty:3, status: 'Pending' }
+      ];
+      inv.forEach(card=>{
+        const crop = card.dataset.crop;
+        const qty = Math.floor(Math.random()*10)+5;
+        card.querySelector('.qty-val').innerText = qty + ' units';
+      });
+      const ol = document.getElementById('order-list');
+      orders.forEach(o=>{
+        ol.innerHTML += `<tr>
+          <td>${o.id}</td><td>${o.crop}</td><td>${o.qty}</td>
+          <td><span class="status-${o.status.toLowerCase()}">${o.status}</span></td>
+        </tr>`;
+      });
+    });
+  </script>
+</head>
+<body>
+  <nav><div class="logo">SmartFarm Inventory</div><ul>
+    <li><a href="index.html">Home</a></li><li><a href="crop-monitoring.html">Crop Monitoring</a></li>
+    <li><a href="customer-view.html" class="active">Inventory</a></li></ul></nav>
+  <section class="container">
+    <h2>Current Inventory</h2>
+    <div class="cards">
+      <div class="prod-card inv-card" data-crop="Spinach"><h3>Spinach</h3><p class="qty-val"></p></div>
+      <div class="prod-card inv-card" data-crop="Lettuce"><h3>Lettuce</h3><p class="qty-val"></p></div>
+      <div class="prod-card inv-card" data-crop="Basil"><h3>Basil</h3><p class="qty-val"></p></div>
+    </div>
+
+    <h2>Recent Orders</h2>
+    <table class="orders"><thead><tr><th>Order ID</th><th>Crop</th><th>Qty</th><th>Status</th></tr></thead><tbody id="order-list"></tbody></table>
+  </section>
+  <footer>&copy; 2025 Urban SmartFarm • Shreelesh</footer>
+</body>
+</html>

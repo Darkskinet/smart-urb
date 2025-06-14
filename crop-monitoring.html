@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crop Monitoring</title><link rel="stylesheet" href="style.css" />
+  <script>
+    const crops = [
+      { name:'Spinach', water:0, minerals:0, pests:'', stage:'', nextIn:0, robot:'' },
+      { name:'Lettuce', water:0, minerals:0, pests:'', stage:'', nextIn:0, robot:'' },
+      { name:'Basil', water:0, minerals:0, pests:'', stage:'', nextIn:0, robot:'' }
+    ];
+    function randomize() {
+      const stages=['Germination','Vegetative','Flowering','Harvest'];
+      crops.forEach(c=>{
+        c.water = Math.floor(Math.random()*50)+50;
+        c.minerals = Math.floor(Math.random()*400)+200;
+        c.pests = Math.random()<0.2?'Infested':'Clean';
+        c.stage = stages[Math.floor(Math.random()*stages.length)];
+        c.nextIn = Math.floor(Math.random()*48)+12; // hours
+        c.robot = (c.water<70?'Irrigation ':'') + (c.pests=='Infested'?'Pest Ctrl':'').trim() || 'Monitoring';
+      });
+    }
+    document.addEventListener("DOMContentLoaded",()=>{
+      randomize();
+      const container = document.getElementById('cards');
+      crops.forEach(c=>{
+        const card = document.createElement('div'); card.className = 'stat-card';
+        card.innerHTML = `
+          <h3>${c.name}</h3>
+          <div class="meter-row">
+            <div><svg class="meter"><circle cx="40" cy="40" r="36"></circle><circle cx="40" cy="40" r="36" style="--pct:${c.water}"></circle></svg><span>Water ${c.water}%</span></div>
+            <div><svg class="meter"><circle cx="40" cy="40" r="36"></circle><circle cx="40" cy="40" r="36" style="--pct:${c.minerals/6}"></circle></svg><span>${c.minerals} mg/L</span></div>
+          </div>
+          <p>Pests: <span class="${c.pests=='Clean'?'badge-ok':'badge-alert'}">${c.pests}</span></p>
+          <p>Stage: <span class="badge-stage">${c.stage}</span> (Next in ~${c.nextIn}h)</p>
+          <p>Robot: <em>${c.robot}</em></p>
+        `;
+        container.appendChild(card);
+      });
+    });
+  </script>
+</head>
+<body>
+  <nav><div class="logo">SmartFarm Monitoring</div><ul>
+    <li><a href="index.html">Home</a></li><li><a href="crop-monitoring.html" class="active">Crop Monitoring</a></li>
+    <li><a href="customer-view.html">Inventory</a></li></ul></nav>
+  <section class="container">
+    <h2>Crop Monitoring & AI-Controlled Automation</h2>
+    <div id="cards" class="cards"></div>
+  </section>
+  <footer>&copy; 2025 Urban SmartFarm • Shreelesh</footer>
+</body>
+</html>
